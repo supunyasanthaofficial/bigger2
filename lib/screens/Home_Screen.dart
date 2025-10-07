@@ -278,6 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Image Container - Updated
             Container(
               height: 120,
               width: double.infinity,
@@ -288,12 +289,44 @@ class _HomeScreenState extends State<HomeScreen> {
                   topRight: Radius.circular(12),
                 ),
               ),
-              child: Icon(
-                Icons.shopping_bag,
-                size: 40,
-                color: Colors.grey[400],
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+                child: Image.network(
+                  product.image,
+                  width: double.infinity,
+                  height: 120,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[200],
+                      child: Icon(
+                        Icons.shopping_bag,
+                        size: 40,
+                        color: Colors.grey[400],
+                      ),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      color: Colors.grey[200],
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
+            // Rest of the code remains same...
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -583,10 +616,41 @@ class _HomeScreenState extends State<HomeScreen> {
                       topRight: Radius.circular(12),
                     ),
                   ),
-                  child: Icon(
-                    Icons.shopping_bag,
-                    size: 40,
-                    color: Colors.grey[400],
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12),
+                    ),
+                    child: Image.network(
+                      product.image,
+                      width: double.infinity,
+                      height: 120,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[200],
+                          child: Icon(
+                            Icons.shopping_bag,
+                            size: 40,
+                            color: Colors.grey[400],
+                          ),
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          color: Colors.grey[200],
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Positioned(
@@ -639,6 +703,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+            // Rest of the code remains same...
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
