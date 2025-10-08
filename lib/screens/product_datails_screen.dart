@@ -55,6 +55,40 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
+  // Widget _buildProductImage() {
+  //   return Container(
+  //     height: 300,
+  //     width: double.infinity,
+  //     color: Colors.grey[100],
+  //     child: Stack(
+  //       children: [
+  //         Center(
+  //           child: Icon(Icons.shopping_bag, size: 120, color: Colors.grey[400]),
+  //         ),
+  //         // Discount Badge
+  //         Positioned(
+  //           top: 16,
+  //           left: 16,
+  //           child: Container(
+  //             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+  //             decoration: BoxDecoration(
+  //               color: Colors.red,
+  //               borderRadius: BorderRadius.circular(20),
+  //             ),
+  //             child: Text(
+  //               '-${product.discountPercentage.toStringAsFixed(0)}% OFF',
+  //               style: const TextStyle(
+  //                 color: Colors.white,
+  //                 fontSize: 12,
+  //                 fontWeight: FontWeight.bold,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget _buildProductImage() {
     return Container(
       height: 300,
@@ -62,8 +96,32 @@ class ProductDetailsScreen extends StatelessWidget {
       color: Colors.grey[100],
       child: Stack(
         children: [
+          // Image - Updated
           Center(
-            child: Icon(Icons.shopping_bag, size: 120, color: Colors.grey[400]),
+            child: Image.network(
+              product.image,
+              width: double.infinity,
+              height: 300,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.shopping_bag,
+                  size: 120,
+                  color: Colors.grey[400],
+                );
+              },
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+            ),
           ),
           // Discount Badge
           Positioned(
