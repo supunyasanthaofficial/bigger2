@@ -3,6 +3,7 @@ import '../screens/Home_Screen.dart';
 import '../screens/Menu_Screen.dart';
 import '../screens/Cart_Screen.dart';
 import '../screens/Profile_Screen.dart';
+import '../screens/Upload_Screen.dart';
 import '../models/product_model.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -46,13 +47,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 1:
         return const MenuScreen(key: ValueKey('MenuScreen'));
       case 2:
+        return const UploadScreen(
+          key: ValueKey('UploadScreen'),
+        ); // Upload Screen
+      case 3:
         return CartScreen(
           key: const ValueKey('CartScreen'),
           cartItems: _cartItems,
           onRemoveFromCart: _removeFromCart,
           onClearCart: _clearCart,
         );
-      case 3:
+      case 4:
         return const ProfileScreen(key: ValueKey('ProfileScreen'));
       default:
         return HomeScreen(
@@ -118,26 +123,27 @@ class _BottomNavBarState extends State<BottomNavBar> {
             backgroundColor: const Color.fromARGB(255, 84, 105, 199),
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.grey[300],
-            selectedIconTheme: const IconThemeData(size: 28),
+            selectedIconTheme: const IconThemeData(size: 26),
             unselectedIconTheme: IconThemeData(
-              size: 26,
+              size: 24,
               color: Colors.grey[300],
             ),
-            iconSize: 26,
+            iconSize: 24,
             selectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 12,
-              letterSpacing: 0.5,
+              fontSize: 11,
+              letterSpacing: 0.3,
             ),
             unselectedLabelStyle: TextStyle(
               fontWeight: FontWeight.normal,
-              fontSize: 11,
+              fontSize: 10,
               color: Colors.grey[300],
             ),
             showSelectedLabels: true,
             showUnselectedLabels: true,
             elevation: 10,
             items: [
+              // Home
               BottomNavigationBarItem(
                 icon: Container(
                   padding: const EdgeInsets.all(6),
@@ -160,8 +166,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                           top: -2,
                           right: -2,
                           child: Container(
-                            width: 8,
-                            height: 8,
+                            width: 6,
+                            height: 6,
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
@@ -181,6 +187,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 ),
                 label: "Home",
               ),
+
+              // Menu
               BottomNavigationBarItem(
                 icon: Container(
                   padding: const EdgeInsets.all(6),
@@ -203,8 +211,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                           top: -2,
                           right: -2,
                           child: Container(
-                            width: 8,
-                            height: 8,
+                            width: 6,
+                            height: 6,
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
@@ -224,6 +232,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 ),
                 label: "Menu",
               ),
+
+              // Upload
               BottomNavigationBarItem(
                 icon: Container(
                   padding: const EdgeInsets.all(6),
@@ -235,27 +245,72 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   ),
                   child: Stack(
                     children: [
-                      Badge(
-                        smallSize: 16,
-                        backgroundColor: Colors.red,
-                        label: Text(
-                          _cartItemCount > 0 ? _cartItemCount.toString() : '0',
-                          style: const TextStyle(fontSize: 10),
-                        ),
-                        child: Icon(
-                          Icons.shopping_cart_outlined,
-                          color: _currentIndex == 2
-                              ? Colors.white
-                              : Colors.grey[300],
-                        ),
+                      Icon(
+                        Icons.add_circle_outline,
+                        color: _currentIndex == 2
+                            ? Colors.white
+                            : Colors.grey[300],
                       ),
                       if (_currentIndex == 2)
                         Positioned(
                           top: -2,
                           right: -2,
                           child: Container(
-                            width: 8,
-                            height: 8,
+                            width: 6,
+                            height: 6,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                activeIcon: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(0.2),
+                  ),
+                  child: const Icon(Icons.add_circle, color: Colors.white),
+                ),
+                label: "Upload",
+              ),
+
+              // Cart
+              BottomNavigationBarItem(
+                icon: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentIndex == 3
+                        ? Colors.white.withOpacity(0.2)
+                        : Colors.transparent,
+                  ),
+                  child: Stack(
+                    children: [
+                      Badge(
+                        smallSize: 14,
+                        backgroundColor: Colors.red,
+                        label: Text(
+                          _cartItemCount > 0 ? _cartItemCount.toString() : '0',
+                          style: const TextStyle(fontSize: 8),
+                        ),
+                        child: Icon(
+                          Icons.shopping_cart_outlined,
+                          color: _currentIndex == 3
+                              ? Colors.white
+                              : Colors.grey[300],
+                        ),
+                      ),
+                      if (_currentIndex == 3)
+                        Positioned(
+                          top: -2,
+                          right: -2,
+                          child: Container(
+                            width: 6,
+                            height: 6,
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
@@ -272,23 +327,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     color: Colors.white.withOpacity(0.2),
                   ),
                   child: Badge(
-                    smallSize: 16,
+                    smallSize: 14,
                     backgroundColor: Colors.red,
                     label: Text(
                       _cartItemCount > 0 ? _cartItemCount.toString() : '0',
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(fontSize: 8),
                     ),
                     child: const Icon(Icons.shopping_cart, color: Colors.white),
                   ),
                 ),
                 label: "Cart",
               ),
+
+              // Profile
               BottomNavigationBarItem(
                 icon: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: _currentIndex == 3
+                    color: _currentIndex == 4
                         ? Colors.white.withOpacity(0.2)
                         : Colors.transparent,
                   ),
@@ -296,17 +353,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     children: [
                       Icon(
                         Icons.person_outline,
-                        color: _currentIndex == 3
+                        color: _currentIndex == 4
                             ? Colors.white
                             : Colors.grey[300],
                       ),
-                      if (_currentIndex == 3)
+                      if (_currentIndex == 4)
                         Positioned(
                           top: -2,
                           right: -2,
                           child: Container(
-                            width: 8,
-                            height: 8,
+                            width: 6,
+                            height: 6,
                             decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
