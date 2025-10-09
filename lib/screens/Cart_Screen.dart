@@ -4,11 +4,13 @@ import '../models/product_model.dart';
 // Card Payment Screen
 class CardPaymentScreen extends StatefulWidget {
   final double totalAmount;
+  final List<Product> cartItems; // Add this line
   final Function() onOrderConfirmed;
 
   const CardPaymentScreen({
     super.key,
     required this.totalAmount,
+    required this.cartItems, // Add this parameter
     required this.onOrderConfirmed,
   });
 
@@ -70,35 +72,91 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Order Summary
+            // Order Summary Card - SAME AS CASH ON DELIVERY
             Card(
               elevation: 2,
               margin: EdgeInsets.zero,
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Order Total',
+                      'Order Summary',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'Rs.${(widget.totalAmount + 250).toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                      ),
+                    const SizedBox(height: 12),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: widget.cartItems.length,
+                      itemBuilder: (context, index) {
+                        final product = widget.cartItems[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  product.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              ),
+                              Text(
+                                'Rs.${product.discountedPrice.toStringAsFixed(2)}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    const Divider(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text('Delivery + Tax'),
+                        Text('Rs.250.00'),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Total Amount',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          'Rs.${(widget.totalAmount + 250).toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 24),
+
+            // Card Details Section
+            const Text(
+              'Card Details',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
 
             // Card Number
             TextFormField(
@@ -206,13 +264,18 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
             ),
             const SizedBox(height: 32),
 
-            // Pay Now Button
+            // Pay Now Button - UPDATED COLOR
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _processPayment,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: const Color.fromARGB(
+                    255,
+                    127,
+                    38,
+                    150,
+                  ), // Same purple color
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -580,7 +643,7 @@ class _CashOnDeliveryScreenState extends State<CashOnDeliveryScreen> {
   }
 }
 
-// Main Cart Screen - Fully Fixed
+// Main Cart Screen - Updated to pass cartItems to CardPaymentScreen
 class CartScreen extends StatefulWidget {
   final List<Product> cartItems;
   final Function(int) onRemoveFromCart;
@@ -842,6 +905,7 @@ class _CartScreenState extends State<CartScreen>
       MaterialPageRoute(
         builder: (context) => CardPaymentScreen(
           totalAmount: _totalAmount,
+          cartItems: widget.cartItems, // Pass cartItems here
           onOrderConfirmed: _onOrderConfirmed,
         ),
       ),
@@ -906,7 +970,7 @@ class _CartScreenState extends State<CartScreen>
         actions: [
           if (widget.cartItems.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.clear_all, color: Colors.red),
+              icon: const Icon(Icons.delete, color: Colors.red),
               onPressed: widget.onClearCart,
               tooltip: 'Clear Cart',
             ),
