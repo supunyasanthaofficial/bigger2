@@ -1,9 +1,401 @@
+// import 'package:flutter/material.dart';
+// import '../screens/Home_Screen.dart';
+// import '../screens/Menu_Screen.dart';
+// import '../screens/Cart_Screen.dart';
+// import '../screens/Profile_Screen.dart';
+// import '../screens/Upload_Screen.dart';
+// import '../models/product_model.dart';
+
+// class BottomNavBar extends StatefulWidget {
+//   const BottomNavBar({super.key});
+
+//   @override
+//   _BottomNavBarState createState() => _BottomNavBarState();
+// }
+
+// class _BottomNavBarState extends State<BottomNavBar> {
+//   int _currentIndex = 0;
+//   List<Product> _cartItems = [];
+
+//   void _addToCart(Product product) {
+//     setState(() {
+//       _cartItems.add(product);
+//     });
+//   }
+
+//   void _removeFromCart(int index) {
+//     setState(() {
+//       _cartItems.removeAt(index);
+//     });
+//   }
+
+//   void _clearCart() {
+//     setState(() {
+//       _cartItems.clear();
+//     });
+//   }
+
+//   int get _cartItemCount => _cartItems.length;
+
+//   Widget _buildCurrentScreen() {
+//     switch (_currentIndex) {
+//       case 0:
+//         return HomeScreen(
+//           key: const ValueKey('HomeScreen'),
+//           onAddToCart: _addToCart,
+//         );
+//       case 1:
+//         return const MenuScreen(key: ValueKey('MenuScreen'));
+//       case 2:
+//         return const UploadScreen(
+//           key: ValueKey('UploadScreen'),
+//         ); // Upload Screen
+//       case 3:
+//         return CartScreen(
+//           key: const ValueKey('CartScreen'),
+//           cartItems: _cartItems,
+//           onRemoveFromCart: _removeFromCart,
+//           onClearCart: _clearCart,
+//         );
+//       case 4:
+//         return const ProfileScreen(key: ValueKey('ProfileScreen'));
+//       default:
+//         return HomeScreen(
+//           key: const ValueKey('HomeScreen'),
+//           onAddToCart: _addToCart,
+//         );
+//     }
+//   }
+
+//   void _onTabTapped(int index) {
+//     setState(() {
+//       _currentIndex = index;
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       key: GlobalKey<ScaffoldState>(),
+//       body: AnimatedSwitcher(
+//         duration: const Duration(milliseconds: 500),
+//         switchInCurve: Curves.easeInOut,
+//         switchOutCurve: Curves.easeInOut,
+//         transitionBuilder: (Widget child, Animation<double> animation) {
+//           final slideAnimation =
+//               Tween<Offset>(
+//                 begin: const Offset(0.3, 0.0),
+//                 end: Offset.zero,
+//               ).animate(
+//                 CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+//               );
+
+//           final fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+//             CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+//           );
+
+//           return SlideTransition(
+//             position: slideAnimation,
+//             child: FadeTransition(opacity: fadeAnimation, child: child),
+//           );
+//         },
+//         child: _buildCurrentScreen(),
+//       ),
+//       bottomNavigationBar: Container(
+//         decoration: BoxDecoration(
+//           boxShadow: [
+//             BoxShadow(
+//               color: Colors.black.withOpacity(0.1),
+//               blurRadius: 10,
+//               offset: const Offset(0, -2),
+//             ),
+//           ],
+//         ),
+//         child: ClipRRect(
+//           borderRadius: const BorderRadius.only(
+//             topLeft: Radius.circular(20),
+//             topRight: Radius.circular(20),
+//           ),
+//           child: BottomNavigationBar(
+//             currentIndex: _currentIndex,
+//             onTap: _onTabTapped,
+//             type: BottomNavigationBarType.fixed,
+//             backgroundColor: const Color.fromARGB(255, 84, 105, 199),
+//             selectedItemColor: Colors.white,
+//             unselectedItemColor: Colors.grey[300],
+//             selectedIconTheme: const IconThemeData(size: 26),
+//             unselectedIconTheme: IconThemeData(
+//               size: 24,
+//               color: Colors.grey[300],
+//             ),
+//             iconSize: 24,
+//             selectedLabelStyle: const TextStyle(
+//               fontWeight: FontWeight.bold,
+//               fontSize: 11,
+//               letterSpacing: 0.3,
+//             ),
+//             unselectedLabelStyle: TextStyle(
+//               fontWeight: FontWeight.normal,
+//               fontSize: 10,
+//               color: Colors.grey[300],
+//             ),
+//             showSelectedLabels: true,
+//             showUnselectedLabels: true,
+//             elevation: 10,
+//             items: [
+//               // Home
+//               BottomNavigationBarItem(
+//                 icon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: _currentIndex == 0
+//                         ? Colors.white.withOpacity(0.2)
+//                         : Colors.transparent,
+//                   ),
+//                   child: Stack(
+//                     children: [
+//                       Icon(
+//                         Icons.home_outlined,
+//                         color: _currentIndex == 0
+//                             ? Colors.white
+//                             : Colors.grey[300],
+//                       ),
+//                       if (_currentIndex == 0)
+//                         Positioned(
+//                           top: -2,
+//                           right: -2,
+//                           child: Container(
+//                             width: 6,
+//                             height: 6,
+//                             decoration: const BoxDecoration(
+//                               color: Colors.white,
+//                               shape: BoxShape.circle,
+//                             ),
+//                           ),
+//                         ),
+//                     ],
+//                   ),
+//                 ),
+//                 activeIcon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: Colors.white.withOpacity(0.2),
+//                   ),
+//                   child: const Icon(Icons.home, color: Colors.white),
+//                 ),
+//                 label: "Home",
+//               ),
+
+//               // Menu
+//               BottomNavigationBarItem(
+//                 icon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: _currentIndex == 1
+//                         ? Colors.white.withOpacity(0.2)
+//                         : Colors.transparent,
+//                   ),
+//                   child: Stack(
+//                     children: [
+//                       Icon(
+//                         Icons.menu_outlined,
+//                         color: _currentIndex == 1
+//                             ? Colors.white
+//                             : Colors.grey[300],
+//                       ),
+//                       if (_currentIndex == 1)
+//                         Positioned(
+//                           top: -2,
+//                           right: -2,
+//                           child: Container(
+//                             width: 6,
+//                             height: 6,
+//                             decoration: const BoxDecoration(
+//                               color: Colors.white,
+//                               shape: BoxShape.circle,
+//                             ),
+//                           ),
+//                         ),
+//                     ],
+//                   ),
+//                 ),
+//                 activeIcon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: Colors.white.withOpacity(0.2),
+//                   ),
+//                   child: const Icon(Icons.menu, color: Colors.white),
+//                 ),
+//                 label: "Menu",
+//               ),
+
+//               // Upload
+//               BottomNavigationBarItem(
+//                 icon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: _currentIndex == 2
+//                         ? Colors.white.withOpacity(0.2)
+//                         : Colors.transparent,
+//                   ),
+//                   child: Stack(
+//                     children: [
+//                       Icon(
+//                         Icons.add_circle_outline,
+//                         color: _currentIndex == 2
+//                             ? Colors.white
+//                             : Colors.grey[300],
+//                       ),
+//                       if (_currentIndex == 2)
+//                         Positioned(
+//                           top: -2,
+//                           right: -2,
+//                           child: Container(
+//                             width: 6,
+//                             height: 6,
+//                             decoration: const BoxDecoration(
+//                               color: Colors.white,
+//                               shape: BoxShape.circle,
+//                             ),
+//                           ),
+//                         ),
+//                     ],
+//                   ),
+//                 ),
+//                 activeIcon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: Colors.white.withOpacity(0.2),
+//                   ),
+//                   child: const Icon(Icons.add_circle, color: Colors.white),
+//                 ),
+//                 label: "Upload",
+//               ),
+
+//               // Cart
+//               BottomNavigationBarItem(
+//                 icon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: _currentIndex == 3
+//                         ? Colors.white.withOpacity(0.2)
+//                         : Colors.transparent,
+//                   ),
+//                   child: Stack(
+//                     children: [
+//                       Badge(
+//                         smallSize: 14,
+//                         backgroundColor: Colors.red,
+//                         label: Text(
+//                           _cartItemCount > 0 ? _cartItemCount.toString() : '0',
+//                           style: const TextStyle(fontSize: 8),
+//                         ),
+//                         child: Icon(
+//                           Icons.shopping_cart_outlined,
+//                           color: _currentIndex == 3
+//                               ? Colors.white
+//                               : Colors.grey[300],
+//                         ),
+//                       ),
+//                       if (_currentIndex == 3)
+//                         Positioned(
+//                           top: -2,
+//                           right: -2,
+//                           child: Container(
+//                             width: 6,
+//                             height: 6,
+//                             decoration: const BoxDecoration(
+//                               color: Colors.white,
+//                               shape: BoxShape.circle,
+//                             ),
+//                           ),
+//                         ),
+//                     ],
+//                   ),
+//                 ),
+//                 activeIcon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: Colors.white.withOpacity(0.2),
+//                   ),
+//                   child: Badge(
+//                     smallSize: 14,
+//                     backgroundColor: Colors.red,
+//                     label: Text(
+//                       _cartItemCount > 0 ? _cartItemCount.toString() : '0',
+//                       style: const TextStyle(fontSize: 8),
+//                     ),
+//                     child: const Icon(Icons.shopping_cart, color: Colors.white),
+//                   ),
+//                 ),
+//                 label: "Cart",
+//               ),
+
+//               // Profile
+//               BottomNavigationBarItem(
+//                 icon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: _currentIndex == 4
+//                         ? Colors.white.withOpacity(0.2)
+//                         : Colors.transparent,
+//                   ),
+//                   child: Stack(
+//                     children: [
+//                       Icon(
+//                         Icons.person_outline,
+//                         color: _currentIndex == 4
+//                             ? Colors.white
+//                             : Colors.grey[300],
+//                       ),
+//                       if (_currentIndex == 4)
+//                         Positioned(
+//                           top: -2,
+//                           right: -2,
+//                           child: Container(
+//                             width: 6,
+//                             height: 6,
+//                             decoration: const BoxDecoration(
+//                               color: Colors.white,
+//                               shape: BoxShape.circle,
+//                             ),
+//                           ),
+//                         ),
+//                     ],
+//                   ),
+//                 ),
+//                 activeIcon: Container(
+//                   padding: const EdgeInsets.all(6),
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     color: Colors.white.withOpacity(0.2),
+//                   ),
+//                   child: const Icon(Icons.person, color: Colors.white),
+//                 ),
+//                 label: "Profile",
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 import '../screens/Home_Screen.dart';
 import '../screens/Menu_Screen.dart';
 import '../screens/Cart_Screen.dart';
 import '../screens/Profile_Screen.dart';
-import '../screens/Upload_Screen.dart';
+// import '../screens/Upload_Screen.dart'; // Commented out Upload Screen import
 import '../models/product_model.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -46,18 +438,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
         );
       case 1:
         return const MenuScreen(key: ValueKey('MenuScreen'));
-      case 2:
-        return const UploadScreen(
-          key: ValueKey('UploadScreen'),
-        ); // Upload Screen
-      case 3:
+      // case 2:
+      //   return const UploadScreen(
+      //     key: ValueKey('UploadScreen'),
+      //   ); // Upload Screen - Commented out
+      case 2: // Changed from 3 to 2
         return CartScreen(
           key: const ValueKey('CartScreen'),
           cartItems: _cartItems,
           onRemoveFromCart: _removeFromCart,
           onClearCart: _clearCart,
         );
-      case 4:
+      case 3: // Changed from 4 to 3
         return const ProfileScreen(key: ValueKey('ProfileScreen'));
       default:
         return HomeScreen(
@@ -233,58 +625,60 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 label: "Menu",
               ),
 
-              // Upload
-              BottomNavigationBarItem(
-                icon: Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentIndex == 2
-                        ? Colors.white.withOpacity(0.2)
-                        : Colors.transparent,
-                  ),
-                  child: Stack(
-                    children: [
-                      Icon(
-                        Icons.add_circle_outline,
-                        color: _currentIndex == 2
-                            ? Colors.white
-                            : Colors.grey[300],
-                      ),
-                      if (_currentIndex == 2)
-                        Positioned(
-                          top: -2,
-                          right: -2,
-                          child: Container(
-                            width: 6,
-                            height: 6,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                activeIcon: Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(0.2),
-                  ),
-                  child: const Icon(Icons.add_circle, color: Colors.white),
-                ),
-                label: "Upload",
-              ),
+              // Upload - Commented out
+              // BottomNavigationBarItem(
+              //   icon: Container(
+              //     padding: const EdgeInsets.all(6),
+              //     decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       color: _currentIndex == 2
+              //           ? Colors.white.withOpacity(0.2)
+              //           : Colors.transparent,
+              //     ),
+              //     child: Stack(
+              //       children: [
+              //         Icon(
+              //           Icons.add_circle_outline,
+              //           color: _currentIndex == 2
+              //               ? Colors.white
+              //               : Colors.grey[300],
+              //         ),
+              //         if (_currentIndex == 2)
+              //           Positioned(
+              //             top: -2,
+              //             right: -2,
+              //             child: Container(
+              //               width: 6,
+              //               height: 6,
+              //               decoration: const BoxDecoration(
+              //                 color: Colors.white,
+              //                 shape: BoxShape.circle,
+              //               ),
+              //             ),
+              //           ),
+              //       ],
+              //     ),
+              //   ),
+              //   activeIcon: Container(
+              //     padding: const EdgeInsets.all(6),
+              //     decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       color: Colors.white.withOpacity(0.2),
+              //     ),
+              //     child: const Icon(Icons.add_circle, color: Colors.white),
+              //   ),
+              //   label: "Upload",
+              // ),
 
-              // Cart
+              // Cart - Changed index from 3 to 2
               BottomNavigationBarItem(
                 icon: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: _currentIndex == 3
+                    color:
+                        _currentIndex ==
+                            2 // Changed from 3 to 2
                         ? Colors.white.withOpacity(0.2)
                         : Colors.transparent,
                   ),
@@ -299,12 +693,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         ),
                         child: Icon(
                           Icons.shopping_cart_outlined,
-                          color: _currentIndex == 3
+                          color:
+                              _currentIndex ==
+                                  2 // Changed from 3 to 2
                               ? Colors.white
                               : Colors.grey[300],
                         ),
                       ),
-                      if (_currentIndex == 3)
+                      if (_currentIndex == 2) // Changed from 3 to 2
                         Positioned(
                           top: -2,
                           right: -2,
@@ -339,13 +735,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 label: "Cart",
               ),
 
-              // Profile
+              // Profile - Changed index from 4 to 3
               BottomNavigationBarItem(
                 icon: Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: _currentIndex == 4
+                    color:
+                        _currentIndex ==
+                            3 // Changed from 4 to 3
                         ? Colors.white.withOpacity(0.2)
                         : Colors.transparent,
                   ),
@@ -353,11 +751,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     children: [
                       Icon(
                         Icons.person_outline,
-                        color: _currentIndex == 4
+                        color:
+                            _currentIndex ==
+                                3 // Changed from 4 to 3
                             ? Colors.white
                             : Colors.grey[300],
                       ),
-                      if (_currentIndex == 4)
+                      if (_currentIndex == 3) // Changed from 4 to 3
                         Positioned(
                           top: -2,
                           right: -2,
