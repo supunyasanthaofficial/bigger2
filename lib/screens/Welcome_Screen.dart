@@ -73,7 +73,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100, // Set a fallback background color
+      backgroundColor: Colors.blue.shade100,
       body: Stack(
         children: [
           // Logo
