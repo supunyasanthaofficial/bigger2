@@ -124,7 +124,7 @@ class ProductData {
         id: '10',
         name: 'Hair Shampoo',
         image:
-            'https://images.unsplash.com/photo-1556227831-5ba8c52ea13f?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2016/11/26/12/52/bottle-1860617_640.png',
         originalPrice: 1200.00,
         discountedPrice: 900.00,
         rating: 4.2,
@@ -254,7 +254,7 @@ class ProductData {
         id: '20',
         name: 'Designer Dress',
         image:
-            'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2016/10/16/23/33/fashion-show-1746592_640.jpg',
         originalPrice: 8500.00,
         discountedPrice: 7200.00,
         rating: 4.7,
@@ -265,7 +265,7 @@ class ProductData {
         id: '21',
         name: 'Leather Handbag',
         image:
-            'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2015/08/10/20/14/handbag-883113_640.jpg',
         originalPrice: 12500.00,
         discountedPrice: 10500.00,
         rating: 4.8,
@@ -276,7 +276,7 @@ class ProductData {
         id: '22',
         name: 'Formal Shoes',
         image:
-            'https://images.unsplash.com/photo-1560769684-55015cee73a8?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2016/03/27/22/16/fashion-1284496_1280.jpg',
         originalPrice: 6500.00,
         discountedPrice: 5200.00,
         rating: 4.5,
