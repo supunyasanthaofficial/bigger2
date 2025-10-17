@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _searchController = TextEditingController();
   final List<Product> _flashSaleProducts = ProductData.getFlashSaleProducts();
   final List<Product> _popularProducts = ProductData.getPopularProducts();
   final List<Category> _categories = CategoryData.getCategories();
@@ -54,55 +53,62 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Bar
-              _buildSearchBar(),
-              const SizedBox(height: 24),
+        child: CustomScrollView(
+          slivers: [
+            // Main Content
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Welcome Header
+                    _buildWelcomeHeader(),
+                    const SizedBox(height: 24),
 
-              // Newsletter Section
-              _buildNewsletterSection(),
-              const SizedBox(height: 32),
+                    // Newsletter Section
+                    _buildNewsletterSection(),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              ),
+            ),
 
-              // Flash Sale Section
-              _buildFlashSaleSection(),
-              const SizedBox(height: 32),
+            // Flash Sale Section
+            SliverToBoxAdapter(child: _buildFlashSaleSection()),
 
-              // Categories Section
-              _buildCategoriesSection(),
-              const SizedBox(height: 32),
+            // Categories Section
+            SliverToBoxAdapter(child: _buildCategoriesSection()),
 
-              // Popular Products Section
-              _buildPopularProductsSection(),
-              const SizedBox(height: 20),
-            ],
-          ),
+            // Popular Products Section
+            SliverToBoxAdapter(child: _buildPopularProductsSection()),
+
+            // Bottom Padding
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildSearchBar() {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[300]!),
-      ),
-      child: TextField(
-        controller: _searchController,
-        decoration: InputDecoration(
-          hintText: 'Search for items...',
-          hintStyle: TextStyle(color: Colors.grey[500]),
-          prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+  Widget _buildWelcomeHeader() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Welcome!',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey[900],
+          ),
         ),
-      ),
+        const SizedBox(height: 8),
+        Text(
+          'Discover amazing products and exclusive deals',
+          style: TextStyle(fontSize: 16, color: Colors.grey[600], height: 1.4),
+        ),
+      ],
     );
   }
 
@@ -161,6 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         hintText: 'Your email address',
                         hintStyle: TextStyle(color: Colors.grey[500]),
                         border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ),
@@ -194,56 +203,82 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildFlashSaleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Flash Sale',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Row(
-                children: const [
-                  Text(
-                    'Shop More',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w600,
-                    ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Flash Sale',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_ios, size: 12, color: Colors.blue),
-                ],
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        'Shop More',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Text(
+              'End ${_formatDuration(_timeLeft)}',
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Text(
-          'End ${_formatDuration(_timeLeft)}',
-          style: const TextStyle(
-            color: Colors.red,
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
           ),
-        ),
-        const SizedBox(height: 16),
-        SizedBox(
-          height: 220,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _flashSaleProducts.length,
-            itemBuilder: (context, index) {
-              final product = _flashSaleProducts[index];
-              return _buildFlashSaleProductCard(product);
-            },
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 220,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              itemCount: _flashSaleProducts.length,
+              itemBuilder: (context, index) {
+                final product = _flashSaleProducts[index];
+                return Container(
+                  margin: EdgeInsets.only(
+                    right: index == _flashSaleProducts.length - 1 ? 0 : 16,
+                  ),
+                  child: _buildFlashSaleProductCard(product),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -262,7 +297,6 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Container(
         width: 160,
-        margin: const EdgeInsets.only(right: 16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -278,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image Container - Updated
+            // Image Container
             Container(
               height: 120,
               width: double.infinity,
@@ -326,7 +360,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            // Rest of the code remains same...
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -337,6 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
+                      height: 1.2,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -344,21 +378,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Text(
-                        'Rs.${product.discountedPrice.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                          fontSize: 14,
+                      Flexible(
+                        child: Text(
+                          'Rs.${product.discountedPrice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                            fontSize: 14,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        'Rs.${product.originalPrice.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.grey[500],
-                          fontSize: 11,
+                      Flexible(
+                        child: Text(
+                          'Rs.${product.originalPrice.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.grey[500],
+                            fontSize: 11,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -392,60 +432,78 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCategoriesSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Categories',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Row(
-                children: const [
-                  Text(
-                    'Shop More',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w600,
-                    ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Categories',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_ios, size: 12, color: Colors.blue),
-                ],
-              ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        'Shop More',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 1.0,
           ),
-          itemCount: _categories.length,
-          itemBuilder: (context, index) {
-            final category = _categories[index];
-            return GestureDetector(
-              onTap: () {
-                navigateToCategoryScreen(
-                  context,
-                  category,
-                  onAddToCart: widget.onAddToCart,
-                );
-              },
-              child: _buildCategoryItem(category),
-            );
-          },
-        ),
-      ],
+          const SizedBox(height: 16),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 1.0,
+            ),
+            itemCount: _categories.length,
+            itemBuilder: (context, index) {
+              final category = _categories[index];
+              return GestureDetector(
+                onTap: () {
+                  navigateToCategoryScreen(
+                    context,
+                    category,
+                    onAddToCart: widget.onAddToCart,
+                  );
+                },
+                child: _buildCategoryItem(category),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -468,10 +526,15 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(category.icon, style: const TextStyle(fontSize: 24)),
           const SizedBox(height: 8),
-          Text(
-            category.name,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-            textAlign: TextAlign.center,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              category.name,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -488,61 +551,85 @@ class _HomeScreenState extends State<HomeScreen> {
         ? _popularProducts.where((product) => product.isHot).toList()
         : _popularProducts.where((product) => product.isNew).toList();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Popular Products',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Row(
-                children: const [
-                  Text(
-                    'Shop More',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w600,
-                    ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Popular Products',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_ios, size: 12, color: Colors.blue),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        'Shop More',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  _buildTabButton('Hot', 0),
+                  _buildTabButton('New', 1),
                 ],
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(8),
           ),
-          child: Row(
-            children: [_buildTabButton('Hot', 0), _buildTabButton('New', 1)],
+          const SizedBox(height: 16),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.75,
+            ),
+            itemCount: filteredProducts.length,
+            itemBuilder: (context, index) {
+              final product = filteredProducts[index];
+              return _buildPopularProductCard(product);
+            },
           ),
-        ),
-        const SizedBox(height: 16),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 0.75,
-          ),
-          itemCount: filteredProducts.length,
-          itemBuilder: (context, index) {
-            final product = filteredProducts[index];
-            return _buildPopularProductCard(product);
-          },
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -567,6 +654,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 color: isSelected ? Colors.white : Colors.grey[600],
                 fontWeight: FontWeight.w600,
+                fontSize: 14,
               ),
             ),
           ),
@@ -703,7 +791,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            // Rest of the code remains same...
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -714,6 +801,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
+                      height: 1.2,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -721,21 +809,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Text(
-                        'Rs.${product.discountedPrice.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                          fontSize: 14,
+                      Flexible(
+                        child: Text(
+                          'Rs.${product.discountedPrice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                            fontSize: 14,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        'Rs.${product.originalPrice.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.grey[500],
-                          fontSize: 11,
+                      Flexible(
+                        child: Text(
+                          'Rs.${product.originalPrice.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.grey[500],
+                            fontSize: 11,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -777,11 +871,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
   }
 }
