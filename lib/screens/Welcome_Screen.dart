@@ -54,15 +54,18 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  static const String logoUrl =
+      'https://drive.google.com/uc?export=view&id=1PN2VDmdS_1NPzFYwGpBGfyiCsIqwWIeV';
+
   @override
   void initState() {
     super.initState();
-    // Navigate to /home after a delay to show the logo
+    // Navigate to /login after 5 seconds
     Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
-        debugPrint('Navigating to /home from WelcomeScreen');
+        debugPrint('Navigating to /login from WelcomeScreen');
         try {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/login');
         } catch (e) {
           debugPrint('Navigation error: $e');
         }
@@ -76,15 +79,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       backgroundColor: Colors.blue.shade100,
       body: Stack(
         children: [
-          // Logo
+          // Logo with Image.network from Google Drive
           FadeInWidget(
             delay: const Duration(milliseconds: 200),
             child: Center(
-              child: Image.asset(
-                'lib/assets/images/Bigger2.png',
+              child: Image.network(
+                logoUrl,
                 width: 200,
                 height: 200,
                 fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
                 errorBuilder: (context, error, stackTrace) {
                   debugPrint('Logo image load failed: $error');
                   return const Icon(
