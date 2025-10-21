@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import './navigation/bottom_nav_bar.dart';
 import 'screens/Welcome_Screen.dart';
-// import 'screens/Login_Screen.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/home': (context) => const BottomNavBar(),
-        // '/login': (context) => const LoginScreen(),
+        '/login': (context) => const LoginScreen(),
       },
     );
   }
