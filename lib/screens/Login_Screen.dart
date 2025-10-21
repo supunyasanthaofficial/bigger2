@@ -1,251 +1,821 @@
-import 'package:flutter/material.dart';
-import 'home_screen.dart';
+// import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
+// class LoginScreen extends StatelessWidget {
+//   const LoginScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final size = MediaQuery.of(context).size;
+
+//     return Scaffold(
+//       backgroundColor: Colors.blue.shade50,
+//       body: SafeArea(
+//         child: SingleChildScrollView(
+//           child: Padding(
+//             padding: const EdgeInsets.all(24.0),
+//             child: Column(
+//               children: [
+//                 // Custom Back Button with better design
+//                 Align(
+//                   alignment: Alignment.topLeft,
+//                   child: Container(
+//                     margin: const EdgeInsets.only(bottom: 20),
+//                     decoration: BoxDecoration(
+//                       color: Colors.white,
+//                       shape: BoxShape.circle,
+//                       boxShadow: [
+//                         BoxShadow(
+//                           color: Colors.black.withOpacity(0.1),
+//                           blurRadius: 8,
+//                           offset: const Offset(0, 2),
+//                         ),
+//                       ],
+//                     ),
+//                     child: IconButton(
+//                       icon: Icon(Icons.arrow_back, color: Colors.blue.shade700),
+//                       onPressed: () {
+//                         Navigator.pop(context);
+//                       },
+//                     ),
+//                   ),
+//                 ),
+
+//                 SizedBox(height: size.height * 0.1),
+
+//                 // Welcome Section with improved design
+//                 FadeInWidget(
+//                   delay: const Duration(milliseconds: 300),
+//                   child: Column(
+//                     children: [
+//                       Container(
+//                         width: 80,
+//                         height: 80,
+//                         decoration: BoxDecoration(
+//                           color: Colors.white,
+//                           shape: BoxShape.circle,
+//                           boxShadow: [
+//                             BoxShadow(
+//                               color: Colors.blue.shade200.withOpacity(0.3),
+//                               blurRadius: 15,
+//                               offset: const Offset(0, 5),
+//                             ),
+//                           ],
+//                         ),
+//                         child: Icon(
+//                           Icons.lock_person,
+//                           size: 40,
+//                           color: Colors.blue.shade700,
+//                         ),
+//                       ),
+//                       const SizedBox(height: 24),
+//                       Text(
+//                         'Welcome Back!',
+//                         style: TextStyle(
+//                           fontSize: 32,
+//                           fontWeight: FontWeight.bold,
+//                           color: Colors.blue.shade900,
+//                           letterSpacing: -0.5,
+//                         ),
+//                       ),
+//                       const SizedBox(height: 12),
+//                       Text(
+//                         'Sign in to continue your journey',
+//                         style: TextStyle(
+//                           fontSize: 16,
+//                           color: Colors.blue.shade600,
+//                           fontWeight: FontWeight.w500,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 60),
+
+//                 // Main Google Sign In Button with improved design
+//                 FadeInWidget(
+//                   delay: const Duration(milliseconds: 500),
+//                   child: _buildGoogleSignInButton(context),
+//                 ),
+
+//                 const SizedBox(height: 20),
+
+//                 // Divider with "or" text
+//                 FadeInWidget(
+//                   delay: const Duration(milliseconds: 600),
+//                   child: Row(
+//                     children: [
+//                       Expanded(
+//                         child: Divider(
+//                           color: Colors.grey.shade400,
+//                           thickness: 1,
+//                         ),
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 16),
+//                         child: Text(
+//                           'or',
+//                           style: TextStyle(
+//                             color: Colors.grey.shade600,
+//                             fontWeight: FontWeight.w500,
+//                           ),
+//                         ),
+//                       ),
+//                       Expanded(
+//                         child: Divider(
+//                           color: Colors.grey.shade400,
+//                           thickness: 1,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 20),
+
+//                 // Alternative Sign In Options
+//                 FadeInWidget(
+//                   delay: const Duration(milliseconds: 700),
+//                   child: _buildAlternativeSignInOptions(context),
+//                 ),
+
+//                 const SizedBox(height: 40),
+
+//                 // Terms and Conditions with improved styling
+//                 FadeInWidget(
+//                   delay: const Duration(milliseconds: 900),
+//                   child: Column(
+//                     children: [
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 20),
+//                         child: RichText(
+//                           textAlign: TextAlign.center,
+//                           text: TextSpan(
+//                             style: TextStyle(
+//                               fontSize: 12,
+//                               color: Colors.grey.shade600,
+//                               height: 1.5,
+//                             ),
+//                             children: [
+//                               const TextSpan(
+//                                 text: 'By continuing, you agree to our ',
+//                               ),
+//                               TextSpan(
+//                                 text: 'Terms of Service',
+//                                 style: TextStyle(
+//                                   color: Colors.blue.shade700,
+//                                   fontWeight: FontWeight.w600,
+//                                   decoration: TextDecoration.underline,
+//                                 ),
+//                               ),
+//                               const TextSpan(text: ' and '),
+//                               TextSpan(
+//                                 text: 'Privacy Policy',
+//                                 style: TextStyle(
+//                                   color: Colors.blue.shade700,
+//                                   fontWeight: FontWeight.w600,
+//                                   decoration: TextDecoration.underline,
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(height: 8),
+//                       // Additional info
+//                       Text(
+//                         'Your privacy and security are important to us',
+//                         style: TextStyle(
+//                           fontSize: 10,
+//                           color: Colors.grey.shade500,
+//                           fontStyle: FontStyle.italic,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 20),
+
+//                 // Guest Option
+//                 FadeInWidget(
+//                   delay: const Duration(milliseconds: 1000),
+//                   child: TextButton(
+//                     onPressed: () {
+//                       _handleGuestLogin(context);
+//                     },
+//                     child: Text(
+//                       'Continue as Guest',
+//                       style: TextStyle(
+//                         color: Colors.blue.shade700,
+//                         fontWeight: FontWeight.w600,
+//                         fontSize: 14,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildGoogleSignInButton(BuildContext context) {
+//     return Container(
+//       width: double.infinity,
+//       height: 56,
+//       decoration: BoxDecoration(
+//         gradient: LinearGradient(
+//           begin: Alignment.topLeft,
+//           end: Alignment.bottomRight,
+//           colors: [Colors.white, Colors.grey.shade50],
+//         ),
+//         borderRadius: BorderRadius.circular(16),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.black.withOpacity(0.1),
+//             blurRadius: 12,
+//             offset: const Offset(0, 4),
+//           ),
+//           BoxShadow(
+//             color: Colors.black.withOpacity(0.05),
+//             blurRadius: 4,
+//             offset: const Offset(0, 2),
+//           ),
+//         ],
+//         border: Border.all(color: Colors.grey.shade300, width: 1.5),
+//       ),
+//       child: Material(
+//         color: Colors.transparent,
+//         child: InkWell(
+//           borderRadius: BorderRadius.circular(16),
+//           onTap: () {
+//             _handleGoogleSignIn(context);
+//           },
+//           onHover: (hovering) {
+//             // Hover effect can be implemented here
+//           },
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               // Google icon with better styling
+//               Container(
+//                 width: 28,
+//                 height: 28,
+//                 decoration: BoxDecoration(
+//                   image: DecorationImage(
+//                     image: NetworkImage(
+//                       'https://cdn-icons-png.flaticon.com/512/2991/2991148.png',
+//                     ),
+//                     fit: BoxFit.contain,
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(width: 16),
+//               Text(
+//                 'Sign in with Google',
+//                 style: TextStyle(
+//                   fontSize: 17,
+//                   fontWeight: FontWeight.w600,
+//                   color: Colors.grey.shade800,
+//                   letterSpacing: -0.2,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildAlternativeSignInOptions(BuildContext context) {
+//     return Column(
+//       children: [
+//         // Email option
+//         Container(
+//           width: double.infinity,
+//           height: 50,
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(12),
+//             border: Border.all(color: Colors.grey.shade300),
+//           ),
+//           child: Material(
+//             color: Colors.transparent,
+//             child: InkWell(
+//               borderRadius: BorderRadius.circular(12),
+//               onTap: () {
+//                 _showEmailLoginOption(context);
+//               },
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Icon(
+//                     Icons.email_outlined,
+//                     color: Colors.blue.shade700,
+//                     size: 20,
+//                   ),
+//                   const SizedBox(width: 12),
+//                   Text(
+//                     'Continue with Email',
+//                     style: TextStyle(
+//                       fontSize: 15,
+//                       fontWeight: FontWeight.w500,
+//                       color: Colors.grey.shade800,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//         const SizedBox(height: 12),
+
+//         // Phone option
+//         Container(
+//           width: double.infinity,
+//           height: 50,
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(12),
+//             border: Border.all(color: Colors.grey.shade300),
+//           ),
+//           child: Material(
+//             color: Colors.transparent,
+//             child: InkWell(
+//               borderRadius: BorderRadius.circular(12),
+//               onTap: () {
+//                 _showPhoneLoginOption(context);
+//               },
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Icon(
+//                     Icons.phone_android_outlined,
+//                     color: Colors.blue.shade700,
+//                     size: 20,
+//                   ),
+//                   const SizedBox(width: 12),
+//                   Text(
+//                     'Continue with Phone',
+//                     style: TextStyle(
+//                       fontSize: 15,
+//                       fontWeight: FontWeight.w500,
+//                       color: Colors.grey.shade800,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+
+//   void _handleGoogleSignIn(BuildContext context) {
+//     // Show beautiful loading dialog
+//     showDialog(
+//       context: context,
+//       barrierDismissible: false,
+//       builder: (BuildContext context) {
+//         return Dialog(
+//           backgroundColor: Colors.transparent,
+//           elevation: 0,
+//           child: Container(
+//             padding: const EdgeInsets.all(24),
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//               borderRadius: BorderRadius.circular(20),
+//               boxShadow: [
+//                 BoxShadow(
+//                   color: Colors.black.withOpacity(0.2),
+//                   blurRadius: 20,
+//                   offset: const Offset(0, 10),
+//                 ),
+//               ],
+//             ),
+//             child: Column(
+//               mainAxisSize: MainAxisSize.min,
+//               children: [
+//                 const CircularProgressIndicator(
+//                   valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+//                   strokeWidth: 3,
+//                 ),
+//                 const SizedBox(height: 16),
+//                 Text(
+//                   'Signing in with Google...',
+//                   style: TextStyle(
+//                     fontSize: 16,
+//                     fontWeight: FontWeight.w600,
+//                     color: Colors.grey.shade700,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         );
+//       },
+//     );
+
+//     // Simulate Google Sign In process
+//     Future.delayed(const Duration(seconds: 2), () {
+//       // Remove loading indicator
+//       Navigator.pop(context);
+
+//       // Navigate to home screen after successful login
+//       Navigator.pushReplacementNamed(context, '/home');
+
+//       // Show beautiful success message
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Row(
+//             children: [
+//               Icon(Icons.check_circle, color: Colors.white, size: 20),
+//               const SizedBox(width: 8),
+//               const Expanded(
+//                 child: Text('Successfully signed in with Google!'),
+//               ),
+//             ],
+//           ),
+//           backgroundColor: Colors.green.shade600,
+//           behavior: SnackBarBehavior.floating,
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(12),
+//           ),
+//           duration: const Duration(seconds: 3),
+//         ),
+//       );
+//     });
+//   }
+
+//   void _handleGuestLogin(BuildContext context) {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text(
+//             'Continue as Guest?',
+//             style: TextStyle(
+//               color: Colors.blue.shade800,
+//               fontWeight: FontWeight.bold,
+//             ),
+//           ),
+//           content: Text(
+//             'You can always sign in later to access all features and sync your data.',
+//             style: TextStyle(color: Colors.grey.shade700),
+//           ),
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(16),
+//           ),
+//           actions: [
+//             TextButton(
+//               onPressed: () => Navigator.pop(context),
+//               child: Text(
+//                 'Cancel',
+//                 style: TextStyle(color: Colors.grey.shade600),
+//               ),
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 Navigator.pop(context);
+//                 Navigator.pushReplacementNamed(context, '/home');
+//               },
+//               style: ElevatedButton.styleFrom(
+//                 backgroundColor: Colors.blue.shade600,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(12),
+//                 ),
+//               ),
+//               child: const Text(
+//                 'Continue',
+//                 style: TextStyle(color: Colors.white),
+//               ),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+
+//   void _showEmailLoginOption(BuildContext context) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: const Text('Email login option coming soon!'),
+//         backgroundColor: Colors.blue.shade600,
+//         behavior: SnackBarBehavior.floating,
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//       ),
+//     );
+//   }
+
+//   void _showPhoneLoginOption(BuildContext context) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: const Text('Phone login option coming soon!'),
+//         backgroundColor: Colors.blue.shade600,
+//         behavior: SnackBarBehavior.floating,
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//       ),
+//     );
+//   }
+// }
+
+// // FadeInWidget class remains the same
+// class FadeInWidget extends StatefulWidget {
+//   final Widget child;
+//   final Duration delay;
+
+//   const FadeInWidget({
+//     super.key,
+//     required this.child,
+//     this.delay = Duration.zero,
+//   });
+
+//   @override
+//   _FadeInWidgetState createState() => _FadeInWidgetState();
+// }
+
+// class _FadeInWidgetState extends State<FadeInWidget>
+//     with SingleTickerProviderStateMixin {
+//   late AnimationController _controller;
+//   late Animation<double> _animation;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _controller = AnimationController(
+//       duration: const Duration(milliseconds: 800),
+//       vsync: this,
+//     );
+//     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+//     Future.delayed(widget.delay, () {
+//       if (mounted) {
+//         _controller.forward();
+//       }
+//     });
+//   }
+
+//   @override
+//   void dispose() {
+//     _controller.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return FadeTransition(opacity: _animation, child: widget.child);
+//   }
+// }
+import 'package:flutter/material.dart';
+
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;
-  bool _obscurePassword = true;
-
-  void _login() {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter both email and password'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF4facfe), Color(0xFF00f2fe)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  // Title
-                  const Text(
-                    "BIGGER2",
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  const SizedBox(height: 50),
+    final size = MediaQuery.of(context).size;
 
-                  // Card with form
-                  Container(
-                    padding: const EdgeInsets.all(24),
+    return Scaffold(
+      backgroundColor: Colors.blue.shade50,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                // Custom Back Button with better design
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
+                      shape: BoxShape.circle,
+                      boxShadow: [
                         BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 10,
-                          offset: Offset(0, 4),
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Login to your account",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // Email Input
-                        TextField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.email_outlined),
-                            hintText: "Email",
-                            filled: true,
-                            fillColor: Colors.grey[100],
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-
-                        // Password Input
-                        TextField(
-                          controller: _passwordController,
-                          obscureText: _obscurePassword,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.lock_outline),
-                            hintText: "Password",
-                            filled: true,
-                            fillColor: Colors.grey[100],
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscurePassword = !_obscurePassword;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-
-                        // Login Button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: _isLoading ? null : _login,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blueAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: _isLoading
-                                ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : const Text(
-                                    "Login",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-
-                        // Forgot Password
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              // Forgot password logic
-                            },
-                            child: const Text("Forgot Password?"),
-                          ),
-                        ),
-                      ],
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back, color: Colors.blue.shade700),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
+                ),
 
-                  const SizedBox(height: 30),
+                SizedBox(height: size.height * 0.05),
 
-                  // Divider
-                  Row(
+                // Welcome Section with improved design
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 300),
+                  child: Column(
                     children: [
-                      const Expanded(
-                        child: Divider(color: Colors.white70, thickness: 1),
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blue.shade200.withOpacity(0.3),
+                              blurRadius: 15,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.lock_person,
+                          size: 40,
+                          color: Colors.blue.shade700,
+                        ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Welcome Back!',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue.shade900,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Sign in to continue your journey',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue.shade600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 40),
+
+                // Email and Password Form
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 500),
+                  child: _buildEmailPasswordForm(),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Forgot Password
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 600),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        _handleForgotPassword(context);
+                      },
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Colors.blue.shade700,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Sign In Button
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 700),
+                  child: _buildSignInButton(context),
+                ),
+
+                const SizedBox(height: 30),
+
+                // Divider with "or" text
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 800),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          color: Colors.grey.shade400,
+                          thickness: 1,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          "Or Sign In With",
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                          'or',
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      const Expanded(
-                        child: Divider(color: Colors.white70, thickness: 1),
+                      Expanded(
+                        child: Divider(
+                          color: Colors.grey.shade400,
+                          thickness: 1,
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                ),
 
-                  // Social Buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(height: 30),
+
+                // Google Sign In Button
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 900),
+                  child: _buildGoogleSignInButton(context),
+                ),
+
+                const SizedBox(height: 40),
+
+                // Terms and Conditions with improved styling
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 1000),
+                  child: Column(
                     children: [
-                      _socialButton(Icons.g_mobiledata, Colors.red),
-                      const SizedBox(width: 20),
-                      _socialButton(Icons.facebook, Colors.blue),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade600,
+                              height: 1.5,
+                            ),
+                            children: [
+                              const TextSpan(
+                                text: 'By continuing, you agree to our ',
+                              ),
+                              TextSpan(
+                                text: 'Terms of Service',
+                                style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                              const TextSpan(text: ' and '),
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      // Additional info
+                      Text(
+                        'Your privacy and security are important to us',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.grey.shade500,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
                     ],
                   ),
+                ),
 
-                  const SizedBox(height: 30),
+                const SizedBox(height: 20),
 
-                  // Sign Up
-                  GestureDetector(
-                    onTap: () {
-                      // Navigate to signup screen
+                // Guest Option
+                FadeInWidget(
+                  delay: const Duration(milliseconds: 1100),
+                  child: TextButton(
+                    onPressed: () {
+                      _handleGuestLogin(context);
                     },
-                    child: const Text.rich(
-                      TextSpan(
-                        text: "Don't have an account? ",
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
-                        children: [
-                          TextSpan(
-                            text: "Create one",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                    child: Text(
+                      'Continue as Guest',
+                      style: TextStyle(
+                        color: Colors.blue.shade700,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -253,23 +823,460 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _socialButton(IconData icon, Color color) {
-    return CircleAvatar(
-      radius: 28,
-      backgroundColor: Colors.white,
-      child: IconButton(
-        icon: Icon(icon, size: 30, color: color),
-        onPressed: () {
-          // Social login logic
-        },
+  Widget _buildEmailPasswordForm() {
+    return Column(
+      children: [
+        // Email Field
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextField(
+            decoration: InputDecoration(
+              labelText: 'Email',
+              labelStyle: TextStyle(color: Colors.grey.shade600),
+              prefixIcon: Icon(
+                Icons.email_outlined,
+                color: Colors.blue.shade700,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
+            ),
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade800),
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Password Field
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextField(
+            decoration: InputDecoration(
+              labelText: 'Password',
+              labelStyle: TextStyle(color: Colors.grey.shade600),
+              prefixIcon: Icon(Icons.lock_outline, color: Colors.blue.shade700),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.visibility_outlined,
+                  color: Colors.grey.shade500,
+                ),
+                onPressed: () {
+                  // Toggle password visibility
+                },
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
+            ),
+            obscureText: true,
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade800),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSignInButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 56,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.blue.shade600, Colors.blue.shade800],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.shade300.withOpacity(0.4),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            _handleEmailSignIn(context);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.login, color: Colors.white, size: 20),
+              const SizedBox(width: 12),
+              Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  letterSpacing: -0.2,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
+  Widget _buildGoogleSignInButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 56,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.grey.shade50],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        border: Border.all(color: Colors.grey.shade300, width: 1.5),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            _handleGoogleSignIn(context);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Google icon with better styling
+              Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                      'https://drive.google.com/uc?export=view&id=1PN2VDmdS_1NPzFYwGpBGfyiCsIqwWIeV',
+                    ),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey.shade800,
+                  letterSpacing: -0.2,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleEmailSignIn(BuildContext context) {
+    // Show beautiful loading dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 3,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Signing in...',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    // Simulate email sign in process
+    Future.delayed(const Duration(seconds: 2), () {
+      // Remove loading indicator
+      Navigator.pop(context);
+
+      // Navigate to home screen after successful login
+      Navigator.pushReplacementNamed(context, '/home');
+
+      // Show beautiful success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white, size: 20),
+              const SizedBox(width: 8),
+              const Expanded(child: Text('Successfully signed in!')),
+            ],
+          ),
+          backgroundColor: Colors.green.shade600,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    });
+  }
+
+  void _handleGoogleSignIn(BuildContext context) {
+    // Show beautiful loading dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 3,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Signing in with Google...',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    // Simulate Google Sign In process
+    Future.delayed(const Duration(seconds: 2), () {
+      // Remove loading indicator
+      Navigator.pop(context);
+
+      // Navigate to home screen after successful login
+      Navigator.pushReplacementNamed(context, '/home');
+
+      // Show beautiful success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white, size: 20),
+              const SizedBox(width: 8),
+              const Expanded(
+                child: Text('Successfully signed in with Google!'),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.green.shade600,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    });
+  }
+
+  void _handleForgotPassword(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Password reset feature coming soon!'),
+        backgroundColor: Colors.blue.shade600,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
+  }
+
+  void _handleGuestLogin(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Continue as Guest?',
+            style: TextStyle(
+              color: Colors.blue.shade800,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Text(
+            'You can always sign in later to access all features and sync your data.',
+            style: TextStyle(color: Colors.grey.shade700),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.grey.shade600),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue.shade600,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text(
+                'Continue',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+// FadeInWidget class remains the same
+class FadeInWidget extends StatefulWidget {
+  final Widget child;
+  final Duration delay;
+
+  const FadeInWidget({
+    super.key,
+    required this.child,
+    this.delay = Duration.zero,
+  });
+
+  @override
+  _FadeInWidgetState createState() => _FadeInWidgetState();
+}
+
+class _FadeInWidgetState extends State<FadeInWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+    Future.delayed(widget.delay, () {
+      if (mounted) {
+        _controller.forward();
+      }
+    });
+  }
+
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(opacity: _animation, child: widget.child);
   }
 }
