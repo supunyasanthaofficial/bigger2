@@ -1,9 +1,8 @@
-// models/order_model.dart
 import 'package:flutter/material.dart';
 
 enum OrderStatus {
   pending,
-  confirmed, // Fixed typo
+  confirmed,
   processing,
   shipped,
   delivered,
