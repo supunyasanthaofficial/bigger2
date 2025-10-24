@@ -140,7 +140,7 @@ class ProductData {
         id: '11',
         name: 'Cotton T-Shirt',
         image:
-            'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2023/03/22/15/40/man-7869911_1280.jpg',
         originalPrice: 1500.00,
         discountedPrice: 1200.00,
         rating: 4.3,
@@ -151,7 +151,7 @@ class ProductData {
         id: '12',
         name: 'Denim Jeans',
         image:
-            'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2014/05/21/14/54/feet-349687_1280.jpg',
         originalPrice: 4500.00,
         discountedPrice: 3800.00,
         rating: 4.5,
@@ -162,7 +162,7 @@ class ProductData {
         id: '13',
         name: 'Winter Jacket',
         image:
-            'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2016/01/08/06/13/woman-1127201_1280.jpg',
         originalPrice: 8500.00,
         discountedPrice: 7200.00,
         rating: 4.6,
@@ -178,7 +178,7 @@ class ProductData {
         id: '14',
         name: 'Running Shoes',
         image:
-            'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_1280.jpg',
         originalPrice: 6500.00,
         discountedPrice: 5200.00,
         rating: 4.8,
@@ -189,7 +189,7 @@ class ProductData {
         id: '15',
         name: 'Yoga Mat',
         image:
-            'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2017/01/11/11/32/yoga-1971545_1280.jpg',
         originalPrice: 2500.00,
         discountedPrice: 1900.00,
         rating: 4.4,
@@ -200,7 +200,7 @@ class ProductData {
         id: '16',
         name: 'Dumbbell Set',
         image:
-            'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2020/04/07/16/05/fitness-5013986_1280.jpg',
         originalPrice: 12000.00,
         discountedPrice: 9800.00,
         rating: 4.7,
@@ -216,7 +216,7 @@ class ProductData {
         id: '17',
         name: 'Sunglasses',
         image:
-            'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2017/07/13/12/20/wood-sunglasses-2500247_1280.jpg',
         originalPrice: 3500.00,
         discountedPrice: 2800.00,
         rating: 4.5,
@@ -227,7 +227,7 @@ class ProductData {
         id: '18',
         name: 'Leather Watch',
         image:
-            'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2016/11/29/13/39/analog-watch-1869928_1280.jpg',
         originalPrice: 12500.00,
         discountedPrice: 9800.00,
         rating: 4.6,
@@ -238,7 +238,7 @@ class ProductData {
         id: '19',
         name: 'Backpack',
         image:
-            'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop',
+            'https://cdn.pixabay.com/photo/2016/04/06/16/52/hiking-1312226_1280.jpg',
         originalPrice: 4500.00,
         discountedPrice: 3800.00,
         rating: 4.4,
