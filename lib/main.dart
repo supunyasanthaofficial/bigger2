@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
+import './config/supabase_config.dart';
 import './navigation/bottom_nav_bar.dart';
-import 'screens/Welcome_Screen.dart';
-import 'screens/login_screen.dart';
+import './screens/welcome_screen.dart';
+import './screens/login_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Supabase only if configured
+  if (!SupabaseConfig.url.contains('project-ref')) {
+    await Supabase.initialize(
+      url: SupabaseConfig.url,
+      anonKey: SupabaseConfig.anonKey,
+    );
+  }
+
   runApp(const MyApp());
 }
 
