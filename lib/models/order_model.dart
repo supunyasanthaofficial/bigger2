@@ -67,10 +67,10 @@ class Order {
       'id': id,
       'date': date.toIso8601String(),
       'status': status.index,
-      'totalAmount': totalAmount,
+      'total_amount': totalAmount,
       'items': items.map((item) => item.toMap()).toList(),
-      'shippingAddress': shippingAddress,
-      'paymentMethod': paymentMethod,
+      'shipping_address': shippingAddress,
+      'payment_method': paymentMethod,
     };
   }
 
@@ -79,12 +79,12 @@ class Order {
       id: map['id'] ?? '',
       date: DateTime.parse(map['date'] ?? DateTime.now().toIso8601String()),
       status: OrderStatus.values[map['status'] ?? 0],
-      totalAmount: (map['totalAmount'] ?? 0.0).toDouble(),
+      totalAmount: (map['total_amount'] ?? 0.0).toDouble(),
       items: List<OrderItem>.from(
         (map['items'] ?? []).map((item) => OrderItem.fromMap(item)),
       ),
-      shippingAddress: map['shippingAddress'],
-      paymentMethod: map['paymentMethod'],
+      shippingAddress: map['shipping_address'],
+      paymentMethod: map['payment_method'],
     );
   }
 
@@ -126,9 +126,9 @@ class OrderItem {
 
   Map<String, dynamic> toMap() {
     return {
-      'productId': productId,
-      'productName': productName,
-      'productImage': productImage,
+      'product_id': productId,
+      'product_name': productName,
+      'product_image': productImage,
       'price': price,
       'quantity': quantity,
     };
@@ -136,9 +136,9 @@ class OrderItem {
 
   factory OrderItem.fromMap(Map<String, dynamic> map) {
     return OrderItem(
-      productId: map['productId'] ?? '',
-      productName: map['productName'] ?? '',
-      productImage: map['productImage'] ?? '',
+      productId: map['product_id'] ?? '',
+      productName: map['product_name'] ?? '',
+      productImage: map['product_image'] ?? '',
       price: (map['price'] ?? 0.0).toDouble(),
       quantity: map['quantity'] ?? 1,
     );
