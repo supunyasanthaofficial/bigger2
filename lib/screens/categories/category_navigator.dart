@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../models/category_model.dart';
-import '../categories/accessories_screen.dart';
-import '../categories/beauty_health_screen.dart';
-
 import '../../models/product_model.dart';
-
-import '../categories/clothing_screen.dart';
-import '../categories/fashion_screen.dart';
-import '../categories/featured_screen.dart';
-import '../categories/sports_screen.dart';
+import './accessories_screen.dart';
+import './beauty_health_screen.dart';
+import './clothing_screen.dart';
+import './fashion_screen.dart';
+import './featured_screen.dart';
+import './sports_screen.dart';
 
 void navigateToCategoryScreen(
   BuildContext context,
