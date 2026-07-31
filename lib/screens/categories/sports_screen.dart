@@ -10,8 +10,6 @@ class SportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = ProductData.getProductsByCategory('Sports');
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sports'),
@@ -19,27 +17,49 @@ class SportsScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: products.isEmpty
-          ? const Center(
+      body: FutureBuilder<List<Product>>(
+        future: ProductData.getProductsByCategory('Sports'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text(
+                'Error loading sports products',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            );
+          }
+
+          final products = snapshot.data ?? [];
+
+          if (products.isEmpty) {
+            return const Center(
               child: Text(
                 'No Sports Products Available',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-            )
-          : GridView.builder(
-              padding: const EdgeInsets.all(16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 0.75,
-              ),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                return _buildProductCard(context, product);
-              },
+            );
+          }
+
+          return GridView.builder(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.75,
             ),
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return _buildProductCard(context, product);
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -72,7 +92,7 @@ class SportsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // UPDATED IMAGE SECTION
+            // Image Container
             Container(
               height: 120,
               width: double.infinity,
